@@ -90,7 +90,7 @@ class Controller_Admin extends Controller_Base
      */
     public function action_index()
     {
-        $this->template->title = Auth::get('first_name') . ' ' . Auth::get('last_name');
+        $this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
         $this->template->content = View::forge('admin/dashboard');
     }
 

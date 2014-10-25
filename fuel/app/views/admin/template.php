@@ -1,26 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title><?php echo $title; ?></title>
     <?php echo Asset::css([
         'bootstrap.min.css',
         'styles.css'
     ]); ?>
     <?php echo Asset::js(array(
-        'http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js',
+        'jquery.min.js',
     )); ?>
-    <script>
-        $(function(){ $('.topbar').dropdown(); });
-    </script>
 </head>
 <body>
-
+    <?php if ($current_user): ?>
+        <script type="text/javascript">
+            var USER_NAME = <?= json_encode(ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'))) ?>;
+            var USER_ID = <?= json_encode(ucwords(Auth::get('id'))) ?>;
+            var USER_EMAIL = <?= json_encode(Auth::get('email')) ?>;
+            var USERNAME = <?= json_encode(Auth::get('username')) ?>;
+            var BASE_URL = <?= json_encode(Config::get('base_url')) ?>;
+        </script>
+    <?php endif; ?>
     <div class="container">
         <div class="row header container">
             <div class="col-xs-2 text-center"><?= Html::anchor('', '<span class="glyphicon glyphicon-home"></span>') ?></div>
             <div class="col-xs-8 text-center"><h1><?php echo $title; ?></h1></div>
+            <?php if ($current_user) : ?>
+            <div class="col-xs-2 text-center"><?= Html::anchor('admin/logout', '<span class="glyphicon glyphicon-off"></span>') ?></div>
+            <?php else : ?>
             <div class="col-xs-2 text-center"><?= Html::anchor('', '<span class="glyphicon glyphicon-cog"></span>') ?></div>
+            <?php endif; ?>
         </div>
         <div class="row">
             <div class="col-xs-12 avatar text-center">
@@ -28,24 +38,6 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-<?php if (Session::get_flash('success')): ?>
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <p>
-                    <?php echo implode('</p><p>', (array) Session::get_flash('success')); ?>
-                    </p>
-                </div>
-<?php endif; ?>
-<?php if (Session::get_flash('error')): ?>
-                <div class="alert alert-error alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <p>
-                    <?php echo implode('</p><p>', (array) Session::get_flash('error')); ?>
-                    </p>
-                </div>
-<?php endif; ?>
-            </div>
             <div class="col-md-12">
 <?php echo $content; ?>
             </div>
