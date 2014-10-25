@@ -1,0 +1,197 @@
+body {
+    background-color: #232323;
+    margin-top: 60px;
+    margin-bottom: 105px;
+}
+
+footer {
+    /*padding-top: 25px;*/
+    /*height: 65px;*/
+    background: #1b1b1b;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+.content {
+    margin-bottom: 65px;
+}
+
+.header {
+    background-color: #1b1b1b;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+    /*border-bottom: 1px solid #111;*/
+}
+
+.header h1 {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #4d4d4d;
+}
+
+.header .glyphicon {
+    vertical-align: middle;
+}
+
+.header div {
+    height: 60px;
+}
+
+.header div:first-child {
+    right: 15px;
+}
+
+.header div:last-child {
+    left: 15px;
+}
+
+.social-links {
+    list-style: none;
+    width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.social-links li {
+    float: left;
+}
+
+.social-links li a {
+    margin-right: 15px;
+    width: 45px;
+    height: 45px;
+}
+
+.social-links li:first-child {
+    margin-left: -15px;
+}
+
+.social-links li a span {
+    display: block;
+    width: inherit;
+    height: inherit;
+    margin-right: inherit;
+    text-indent: -9999px;
+}
+
+.social-links li a:hover span,
+.social-links li a:focus span {
+    opacity: .9;
+}
+
+.social-links li.twitter a span {
+    background-image: url(../img/twitter.png);
+}
+
+.social-links li.google-plus a span {
+    background-image: url(../img/google.png);
+}
+
+.social-links li.facebook a span {
+    background-image: url(../img/facebook.png);
+}
+
+.header div:first-child{
+    border-right: 1px solid #232323;
+}
+
+.header div:last-child {
+    border-left: 1px solid #232323;
+}
+
+.header div > a {
+    vertical-align: middle;
+    margin: 20px auto;
+}
+
+.header .glyphicon {
+    top: 15px;
+    font-size: 17px;
+    color: #4d4d4d;
+}
+
+.avatar img {
+    border: 15px solid #1b1b1b;
+    -webkit-border-radius: 180px;
+    -moz-border-radius: 180px;
+    border-radius: 180px;
+    margin: 15px 0px;
+}
+
+
+/******************LOGIN PAGE********************/
+.mono-form input[type="text"],
+.mono-form input[type="password"]{
+    font-size: 16px;
+    background: #1b1b1b;
+    height: 45px;
+    border: none;
+}
+
+.mono-form .actions {
+    color: #4d4d4d;
+}
+
+.mono-form .actions a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.mono-form .actions a:hover,
+.mono-form .actions a:focus {
+    text-decoration: none;
+}
+
+.mono-form input[type="checkbox"] {
+    display: none;
+}
+
+.mono-form input[type="checkbox"]:checked + label span {
+    background: url(../img/check_radio_sheet.png) -23px top no-repeat;
+}
+
+.mono-form input[type="checkbox"] + label span {
+    background: url(../img/check_radio_sheet.png) 0px top no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+}
+
+.mono-form input[type="checkbox"] + label {
+    font-weight: normal;
+}
+
+.mono-form input[type="submit"] {
+    box-shadow: inset 0 1px #ba3c30,
+        inset 1px 0 #ba3c30,
+        inset -1px 0 #ba3c30,
+        inset 0 -1px #ba3c30,
+        0 2px #ba3c30,
+        0 3px #ba3c30,
+        0 4px 2px rgba(0,0,0,0.0);
+    background: #e84c3d;
+    border: 0;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 25px;
+}
+
+.mono-form input[type="submit"]:hover,
+.mono-form input[type="submit"]:focus {
+    opacity: .9;
+}
+
+.mono-form input[type="submit"]:active {
+    margin-top: 28px;
+    background: #e84c3d;
+    box-shadow: inset 0 1px 2px #ba3c30;
+}
