@@ -1,3 +1,5 @@
+var CURRENT_DATE;
+
 function get12HourTime(date)
 {   
     var ampm = 'AM';
@@ -15,39 +17,44 @@ function get12HourTime(date)
 +function ($) {
     var StatusButton = function (element, options) {
         var context = this;
+        var startTime = new Date().getTime();
 
         $.getJSON(BASE_URL + 'admin/statuses/mget_all', function (data) {
-            context.$element = $(element);
-            context.options = $.extend({}, StatusButton.DEFAULTS, options);
-            context.options.statuses = data;
+            $.getJSON(BASE_URL + 'admin/mget_time', function (timeInMilis) {
+                CURRENT_DATE = new Date(timeInMilis * 1000 + (new Date().getTime() - startTime));
 
-            if (context.options.currentStatus <= 0) context.options.currentStatus = -1;
-            // Should not be able to time-in if past 12:00PM condition
-            var skip = true;
-            var current = context.options.currentStatus == -1 ? true : false;
-            $.each(context.options.statuses, function (key, value) {
-                if (!skip && current) {
-                    if ((new Date().getTime() / 1000) % (24 * 3600) > value.prompt_time % (24 * 3600)) {
-                        context.options.currentStatus = key;
-                    } else {
-                        return;
+                context.$element = $(element);
+                context.options = $.extend({}, StatusButton.DEFAULTS, options);
+                context.options.statuses = data;
+
+                if (context.options.currentStatus <= 0) context.options.currentStatus = -1;
+                // Should not be able to time-in if past 12:00PM condition
+                var skip = true;
+                var current = context.options.currentStatus == -1 ? true : false;
+                $.each(context.options.statuses, function (key, value) {
+                    if (!skip && current) {
+                        if ((CURRENT_DATE.getTime() / 1000) % (24 * 3600) > value.prompt_time % (24 * 3600)) {
+                            context.options.currentStatus = key;
+                        } else {
+                            return;
+                        }
                     }
-                }
 
-                if (key == context.options.currentStatus) current = true;
-                skip = !skip;
-            });
+                    if (key == context.options.currentStatus) current = true;
+                    skip = !skip;
+                });
 
-            context.nextStatus();
-            context.$element.attr('disabled', false);
-            context.initPromptInterval();
+                context.nextStatus();
+                context.$element.attr('disabled', false);
+                context.initPromptInterval();
 
-            $(document).on('click', element.selector, function (event) {
-                event.preventDefault();
+                $(document).on('click', element.selector, function (event) {
+                    event.preventDefault();
 
-                // context.nextStatus();
-                context.disable();
-                context.sendData();
+                    // context.nextStatus();
+                    context.disable();
+                    context.sendData();
+                });
             });
         });
     }
@@ -60,16 +67,14 @@ function get12HourTime(date)
     };
 
     StatusButton.prototype.setTime = function () {
-        var date = new Date();
         var thres = 60;
         var context = this;
 
-        console.log(date);
-
-        $(context.options.timeTextSelector).html(get12HourTime(date));
+        $(context.options.timeTextSelector).html(get12HourTime(CURRENT_DATE));
         setTimeout(function () {
-            $(context.options.timeTextSelector).html(get12HourTime(new Date()));
-        }, (thres - date.getSeconds()) * 1000);
+            CURRENT_DATE.setMinutes(CURRENT_DATE.getMinutes() + 1);
+            $(context.options.timeTextSelector).html(get12HourTime(CURRENT_DATE));
+        }, (thres - CURRENT_DATE.getSeconds()) * 1000);
     }
 
     StatusButton.prototype.sendData = function () {
@@ -211,7 +216,7 @@ function get12HourTime(date)
     StatusButton.prototype.getTextPrompt = function () {
         var value = this.options.statuses[this.options.currentStatus];
 
-        if (Math.abs((this.options.statuses[this.options.currentStatus].prompt_time % (24 * 3600)) - ((new Date().getTime() / 1000) % (24 * 3600))) <= 5 * 60) {
+        if (Math.abs((this.options.statuses[this.options.currentStatus].prompt_time % (24 * 3600)) - ((CURRENT_DATE.getTime() / 1000) % (24 * 3600))) <= 5 * 60) {
             return 'I think it\'s time for your \'' + value.name + '\'. Click the button below.';
         } else {
             return '';

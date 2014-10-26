@@ -94,6 +94,11 @@ class Controller_Admin extends Controller_Base
         $this->template->content = View::forge('admin/dashboard');
     }
 
+    public function action_mget_time()
+    {
+        return json_encode((int) strtotime(Date::time()));
+    }
+
 }
 
 /* End of file admin.php */
