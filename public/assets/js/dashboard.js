@@ -150,9 +150,6 @@
 
     StatusButton.prototype.getTextPrompt = function () {
         var prompt = '';
-        var date = new Date();
-        date.setHours(7);
-        date.setMinutes(15);
 
         $.each(this.options.statuses, function (key, value) {
             if (Math.abs((value.prompt_time % (24 * 3600)) - ((new Date().getTime() / 1000) % (24 * 3600))) <= 5 * 60) {
