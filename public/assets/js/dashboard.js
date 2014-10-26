@@ -129,11 +129,14 @@ function get12HourTime(date)
             type: "POST",
             dataType: "xml",
             done: function (data) {
+                console.log(data);
                 context.enable();
+                context.nextStatus();
             },
-            fail: function (error) {
+            error: function (error) {
                 context.enable();
-                context.previousStatus();
+                context.nextStatus();
+                // context.previousStatus();
                 console.log(error);
             }
         });
