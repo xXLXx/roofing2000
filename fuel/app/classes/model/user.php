@@ -52,4 +52,18 @@ class Model_User extends \Orm\Model
 		return $result ? $result->status_id : -1;
 	}
 
+	public function getLastJobNo()
+	{	
+		$result = Model_Log::find('first', [
+			'where' 	=> [['user_id' => $this->id]],
+			'order_by'	=> ['updated_at' => 'desc']
+		]);
+		return $result ? $result->job_no : null;
+	}
+
+	public function getFullName()
+	{
+		return ucwords($this->first_name . ' ' . $this->last_name);
+	}
+
 }

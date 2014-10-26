@@ -7,6 +7,7 @@ class Model_Log extends \Orm\Model
 		'status_id',
 		'latitude',
 		'longitude',
+		'job_no',
 		'created_at',
 		'updated_at',
 	);

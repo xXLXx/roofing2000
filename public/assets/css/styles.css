@@ -258,3 +258,38 @@ footer {
     background: #e84c3d;
     box-shadow: inset 0 1px 2px #ba3c30;
 }
+
+#modal-jobno {
+    overflow-y: hidden;
+}
+
+body.modal-open {
+    margin-right: 0px;
+}
+
+#modal-jobno .modal-content {
+    background-color: #eee;
+}
+
+#modal-jobno .modal-header {
+    border-bottom: 1px solid #ccc;
+}
+
+#modal-jobno .mono-form input[type="text"] {
+    background: #ccc;
+    color: #fff;
+    margin-top: 2px;
+}
+
+#modal-jobno .mono-form input[type="text"]::-webkit-input-placeholder {
+    color: #eee;
+}
+
+#modal-jobno .mono-form input[type="text"]::-moz-input-placeholder {
+    color: #eee;
+}
+
+#modal-jobno .actions input[type="submit"] {
+    color: #fff;
+    margin-top: 0px;
+}

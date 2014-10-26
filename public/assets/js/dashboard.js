@@ -29,32 +29,71 @@ function get12HourTime(date)
 
                 if (context.options.currentStatus <= 0) context.options.currentStatus = -1;
                 // Should not be able to time-in if past 12:00PM condition
-                var skip = true;
-                var current = context.options.currentStatus == -1 ? true : false;
+                // var skip = true;
+                // var current = context.options.currentStatus == -1 ? true : false;
+                // $.each(context.options.statuses, function (key, value) {
+                //     if (!skip && current) {
+                //         if ((CURRENT_DATE.getTime() / 1000) % (24 * 3600) > value.prompt_time % (24 * 3600)) {
+                //             context.options.currentStatus = key;
+                //         } else {
+                //             return;
+                //         }
+                //     }
+
+                //     if (key == context.options.currentStatus) current = true;
+                //     skip = !skip;
+                // });
+                
+                // no JOB # on time in
+                var timeIn = false;
                 $.each(context.options.statuses, function (key, value) {
-                    if (!skip && current) {
-                        if ((CURRENT_DATE.getTime() / 1000) % (24 * 3600) > value.prompt_time % (24 * 3600)) {
-                            context.options.currentStatus = key;
-                        } else {
-                            return;
+                    if (key == context.options.currentStatus) {
+                        if (timeIn) {
+                            context.options.jobNo = null;
                         }
+                        return;
                     }
 
-                    if (key == context.options.currentStatus) current = true;
-                    skip = !skip;
+                    timeIn = !timeIn;
                 });
+
+                if (context.options.jobNo) {
+                    $(context.options.jobNoTextSelector).html('Current JOB #: ' + context.options.jobNo);
+                    $(context.options.jobNoModalSelector + ' input[type="text"]').val(context.options.jobNo);
+                } 
 
                 context.nextStatus();
                 context.$element.attr('disabled', false);
                 context.initPromptInterval();
 
-                $(document).on('click', element.selector, function (event) {
-                    event.preventDefault();
+                $(document)
+                    .on('click', element.selector, function (event) {
+                        event.preventDefault();
 
-                    // context.nextStatus();
-                    context.disable();
-                    context.sendData();
-                });
+                        if (context.options.jobNo) {
+                            $(context.options.jobNoModalSelector + ' input[type="submit"]').click();
+                            // $(context.options.jobNoTextSelector).html((context.options.jobNo = null));
+                        } else {
+                            $(context.options.jobNoModalSelector).modal('show');
+                        }
+                    })
+                    .on('click', context.options.jobNoModalSelector + ' input[type="submit"]', function (event) {
+                        var jobNo = $(context.options.jobNoModalSelector + ' input[type="text"]').val();
+                        if (!jobNo) {
+                            return;
+                        }
+
+                        if (!context.options.jobNo) {
+                            $(context.options.jobNoModalSelector).modal('hide');
+                            $(context.options.jobNoTextSelector).html('Current JOB #: ' + (context.options.jobNo = jobNo));
+                        } else {
+                            $(context.options.jobNoModalSelector + ' input[type="text"]').val('');
+                        }
+
+                        // context.nextStatus();
+                        context.disable();
+                        context.sendData();
+                    });
             });
         });
     }
@@ -63,7 +102,10 @@ function get12HourTime(date)
         statuses: {},
         currentStatus: -1,
         promptTextSelector: '#prompt-text',
-        timeTextSelector: '.time span'
+        timeTextSelector: '.time span',
+        jobNoModalSelector: '#modal-jobno',
+        jobNo: null,
+        jobNoTextSelector: '#jobno-text'
     };
 
     StatusButton.prototype.setTime = function () {
@@ -101,7 +143,9 @@ function get12HourTime(date)
                 user_id: USER_ID,
                 status_id: this.options.currentStatus,
                 lat: lat ? lat : -86,
-                lng: lng ? lng : -181}, function (data) {
+                lng: lng ? lng : -181,
+                job_no: this.options.jobNo
+            }, function (data) {
             context.sendToGForms(location, data);
         })
         .fail(function () {
@@ -121,7 +165,7 @@ function get12HourTime(date)
             data: {
                 "entry.1088211692": USER_NAME,
                 "entry.1004697691": USERNAME,
-                "entry.1452432693": USER_EMAIL,
+                "entry.1452432693": context.options.jobNo,
                 "entry.60465779": context.options.statuses[context.options.currentStatus].name,
                 "entry.1912068217": time,
                 "entry.310840202": location
@@ -140,6 +184,10 @@ function get12HourTime(date)
                 console.log(error);
             }
         });
+
+        if (!$(context.options.jobNoModalSelector + ' input[type="text"]').val()) {
+            $(context.options.jobNoTextSelector).html((context.options.jobNo = null));
+        }
     }
 
     StatusButton.prototype.disable = function () {
@@ -228,7 +276,8 @@ function get12HourTime(date)
 
     $.fn.statusbutton = function () {
         this.object = new StatusButton(this, {
-            currentStatus: USER_STATUS 
+            currentStatus: USER_STATUS,
+            jobNo: USER_JOBNO
         });
     }
 

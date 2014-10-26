@@ -5,14 +5,8 @@
 	<thead>
 		<tr>
 			<th>Username</th>
-			<th>Password</th>
-			<th>First name</th>
-			<th>Last name</th>
+			<th>Name</th>
 			<th>Email</th>
-			<th>Group</th>
-			<th>Profile fields</th>
-			<th>Last login</th>
-			<th>Login hash</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -20,8 +14,7 @@
 <?php foreach ($users as $item): ?>		<tr>
 
 			<td><?php echo $item->username; ?></td>
-			<td><?php echo $item->password; ?></td>
-			<td><?php echo $item->first_name; ?></td>
+			<td><?php echo $item->getFullName(); ?></td>
 			<td><?php echo $item->last_name; ?></td>
 			<td><?php echo $item->email; ?></td>
 			<td><?php echo $item->group; ?></td>

@@ -18,12 +18,13 @@
 <body>
     <?php if ($current_user): ?>
         <script type="text/javascript">
-            var USER_NAME = <?= json_encode(ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'))) ?>;
+            var USER_NAME = <?= json_encode($current_user->getFullName()) ?>;
             var USER_ID = <?= json_encode((int) ucwords(Auth::get('id'))) ?>;
             var USER_EMAIL = <?= json_encode(Auth::get('email')) ?>;
             var USERNAME = <?= json_encode(Auth::get('username')) ?>;
             var USER_STATUS = <?= json_encode((int)$current_user->getLastStatus()); ?>;
             var BASE_URL = <?= json_encode(Config::get('base_url')) ?>;
+            var USER_JOBNO = <?= json_encode($current_user->getLastJobNo()); ?>;
         </script>
     <?php endif; ?>
     <div class="container">

@@ -123,6 +123,7 @@ class Controller_Admin_Logs extends Controller_Admin{
 		$log->status_id = Input::post('status_id');
 		$log->latitude = Input::post('lat');
 		$log->longitude = Input::post('lng');
+		$log->job_no = Input::post('job_no');
 
 		if (!$log->save()) {
 			return new RuntimeException();

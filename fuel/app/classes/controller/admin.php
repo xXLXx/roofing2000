@@ -13,10 +13,10 @@ class Controller_Admin extends Controller_Base
             if (Auth::check())
             {
                 $admin_group_id = Config::get('auth.driver', 'Simpleauth') == 'Ormauth' ? 6 : 100;
-                if ( ! Auth::member($admin_group_id))
+                if ( ! Auth::member($admin_group_id) && !Auth::member(1))
                 {
                     Session::set_flash('error', e('You don\'t have access to the admin panel'));
-                    Response::redirect('/');
+                    Response::redirect('admin/login');
                 }
             }
             else
@@ -91,7 +91,13 @@ class Controller_Admin extends Controller_Base
     public function action_index()
     {
         $this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
-        $this->template->content = View::forge('admin/dashboard');
+
+        if (Auth::member(100)) {
+            Response::redirect('admin/users');
+        } else {
+            $this->template->content = View::forge('admin/dashboard');
+        }
+        
     }
 
     public function action_mget_time()
