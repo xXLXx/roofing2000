@@ -8,6 +8,7 @@
             context.options.statuses = data;
 
             context.nextStatus();
+            context.$element.attr('disabled', false);
             context.initPromptInterval();
 
             $(document).on('click', element.selector, function (event) {
@@ -67,12 +68,24 @@
 
         $.ajax({
             type: "POST",
-            url: 'https://docs.google.com/forms/d/1-cSvnSTCZaxWXM7fstjs81TB9Se-I1xByze_pdZ1WIA/formResponse',
-            data: {"entry.2019782483" : name, "entry.1369417126" : email, "entry.988065604": feed},
+            url: 'https://docs.google.com/forms/d/1W0NHmWf869Ixbpa3GrfrrutNGpmKecQ15VTAv1-VVVo/formResponse',
+            data: {
+                "entry.1088211692": USER_NAME,
+                "entry.1004697691": USERNAME,
+                "entry.1452432693": USER_EMAIL,
+                "entry.60465779": context.options.statuses[context.options.currentStatus].name,
+                "entry.1912068217": time,
+                "entry.310840202": location
+            },
             type: "POST",
             dataType: "xml",
-            success: function(data){
+            done: function (data) {
                 context.enable();
+            },
+            fail: function (error) {
+                context.enable();
+                context.previousStatus();
+                console.log(error);
             }
         });
     }
