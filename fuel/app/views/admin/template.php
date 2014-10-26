@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 avatar text-center">
-                <?= Html::img('assets/img/avatar.png') ?>
+                <?= Html::img('assets/img/logo.png', ['id' => 'logo']) ?>
             </div>
         </div>
         <div class="row">
@@ -45,11 +45,24 @@
         </div>
 
         <footer class="row container">
+            <?php if (!$current_user) : ?>
             <ul class="social-links">
                 <li class="twitter"><a href="#"><span>twitter</span></a></li>
                 <li class="google-plus"><a href="#"><span>google</span></a></li>
                 <li class="facebook"><a href="#"><span>facebook</span></a></li>
-           </ul>
+            </ul>
+            <?php else : ?>
+            <ul class="social-links extended">
+                <?php $date = Date::forge(strtotime(new Date())); ?>
+                <li class="time"><span>00:00 pm</span></li>
+                <li class="date">
+                    <span>
+                        <small class="day"><?= $date->format('%A'); ?></small>
+                        <small class="full-date"><?= $date->format('%B ' . (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? '%#d' : '%e') . ', %Y') ?></small>
+                    </span>
+                </li>
+            </ul>
+            <?php endif; ?>
         </footer>
     </div>
 </body>

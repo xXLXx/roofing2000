@@ -1,3 +1,17 @@
+function get12HourTime(date)
+{   
+    var ampm = 'AM';
+    var hr = date.getHours();
+    var min = date.getMinutes();
+
+    if (hr > 12) {
+        hr = hr % 12;
+        ampm = 'PM';
+    }
+
+    return hr + ':' + (min < 10 ? '0' + min : min) + ' ' + ampm;
+}
+
 +function ($) {
     var StatusButton = function (element, options) {
         var context = this;
@@ -41,10 +55,24 @@
     StatusButton.DEFAULTS = {
         statuses: {},
         currentStatus: -1,
-        promptTextSelector: '#prompt-text'
+        promptTextSelector: '#prompt-text',
+        timeTextSelector: '.time span'
     };
 
-    StatusButton.prototype.sendData = function() {
+    StatusButton.prototype.setTime = function () {
+        var date = new Date();
+        var thres = 60;
+        var context = this;
+
+        console.log(date);
+
+        $(context.options.timeTextSelector).html(get12HourTime(date));
+        setTimeout(function () {
+            $(context.options.timeTextSelector).html(get12HourTime(new Date()));
+        }, (thres - date.getSeconds()) * 1000);
+    }
+
+    StatusButton.prototype.sendData = function () {
         if (geoPosition.init()) {
             var context = this;
 
@@ -168,13 +196,16 @@
         var context = this;
 
         if (this.options.promptInterval) {
-            clearTimeout(this.options.promptInterval);
+            clearInterval(this.options.promptInterval);
         } else {
-            this.options.promptInterval = setTimeout(function () {
+            this.options.promptInterval = setInterval(function () {
                 $(context.options.promptTextSelector).html(context.getTextPrompt());
+
+                context.setTime();
             }, 60 * 1000);
 
             $(context.options.promptTextSelector).html(context.getTextPrompt());
+            context.setTime();
         }
     }
 
