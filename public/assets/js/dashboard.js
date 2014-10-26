@@ -7,6 +7,23 @@
             context.options = $.extend({}, StatusButton.DEFAULTS, options);
             context.options.statuses = data;
 
+            if (context.options.currentStatus <= 0) context.options.currentStatus = -1;
+            // Should not be able to time-in if past 12:00PM condition
+            var skip = true;
+            var current = context.options.currentStatus == -1 ? true : false;
+            $.each(context.options.statuses, function (key, value) {
+                if (!skip && current) {
+                    if ((new Date().getTime() / 1000) % (24 * 3600) > value.prompt_time % (24 * 3600)) {
+                        context.options.currentStatus = key;
+                    } else {
+                        return;
+                    }
+                }
+
+                if (key == context.options.currentStatus) current = true;
+                skip = !skip;
+            });
+
             context.nextStatus();
             context.$element.attr('disabled', false);
             context.initPromptInterval();
@@ -14,7 +31,7 @@
             $(document).on('click', element.selector, function (event) {
                 event.preventDefault();
 
-                context.nextStatus();
+                // context.nextStatus();
                 context.disable();
                 context.sendData();
             });
@@ -106,7 +123,7 @@
         var context = this;
 
         $.each(this.options.statuses, function (key, value) {
-            if (context.options.currentStatus == -1 || current) {
+            if (context.options.currentStatus <= 0 || current) {
                 context.options.currentStatus = key;
 
                 context.$element.val(context.options.statuses[context.options.currentStatus].name);
@@ -162,20 +179,19 @@
     }
 
     StatusButton.prototype.getTextPrompt = function () {
-        var prompt = '';
+        var value = this.options.statuses[this.options.currentStatus];
 
-        $.each(this.options.statuses, function (key, value) {
-            if (Math.abs((value.prompt_time % (24 * 3600)) - ((new Date().getTime() / 1000) % (24 * 3600))) <= 5 * 60) {
-                prompt = 'I think it\'s time for your \'' + value.name + '\'. Click the button below.';
-                return;
-            }
-        });
-
-        return prompt;
+        if (Math.abs((this.options.statuses[this.options.currentStatus].prompt_time % (24 * 3600)) - ((new Date().getTime() / 1000) % (24 * 3600))) <= 5 * 60) {
+            return 'I think it\'s time for your \'' + value.name + '\'. Click the button below.';
+        } else {
+            return '';
+        }
     }
 
     $.fn.statusbutton = function () {
-        this.object = new StatusButton(this);
+        this.object = new StatusButton(this, {
+            currentStatus: USER_STATUS 
+        });
     }
 
     $.fn.statusbutton.Constructor = StatusButton;

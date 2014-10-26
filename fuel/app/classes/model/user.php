@@ -43,4 +43,13 @@ class Model_User extends \Orm\Model
 		return $val;
 	}
 
+	public function getLastStatus()
+	{	
+		$result = Model_Log::find('first', [
+			'where' 	=> [['user_id' => $this->id]],
+			'order_by'	=> ['updated_at' => 'desc']
+		]);
+		return $result ? $result->status_id : -1;
+	}
+
 }
