@@ -4,7 +4,7 @@ class Controller_Admin_Users extends Controller_Admin{
 	public function action_index()
 	{
 		$data['users'] = Model_User::find('all', ['where' => [['group', '<', Auth::get('group')]]]);
-		$this->template->title = "Users";
+		$this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
 		$this->template->content = View::forge('admin/users/index', $data);
 
 	}
@@ -13,7 +13,7 @@ class Controller_Admin_Users extends Controller_Admin{
 	{
 		$data['user'] = Model_User::find($id);
 
-		$this->template->title = "User";
+		$this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
 		$this->template->content = View::forge('admin/users/view', $data);
 
 	}
@@ -56,7 +56,7 @@ class Controller_Admin_Users extends Controller_Admin{
 			}
 		}
 
-		$this->template->title = "Users";
+		$this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
 		$this->template->content = View::forge('admin/users/create');
 
 	}
@@ -111,7 +111,7 @@ class Controller_Admin_Users extends Controller_Admin{
 			$this->template->set_global('user', $user, false);
 		}
 
-		$this->template->title = "Users";
+		$this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
 		$this->template->content = View::forge('admin/users/edit');
 
 	}
