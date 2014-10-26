@@ -78,7 +78,7 @@ function get12HourTime(date)
 
             geoPosition.getCurrentPosition(function (p) {
                 $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + p.coords.latitude + ',' + p.coords.longitude, function (data) {
-                    if (data.results) {
+                    if (data.results && data.results.length > 0) {
                         context.saveToDB(p.coords.latitude, p.coords.longitude, data.results[0].formatted_address);
                     } else {
                         context.saveToDB(null);
@@ -112,7 +112,6 @@ function get12HourTime(date)
         var context = this;
 
         $.ajax({
-            type: "POST",
             url: 'https://docs.google.com/forms/d/1W0NHmWf869Ixbpa3GrfrrutNGpmKecQ15VTAv1-VVVo/formResponse',
             data: {
                 "entry.1088211692": USER_NAME,
