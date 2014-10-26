@@ -5,7 +5,7 @@ class Controller_Admin_Logs extends Controller_Admin{
 	{
 		$data['logs'] = Model_Log::find('all');
 		$this->template->title = "Logs";
-		$this->template->content = View::forge('admin\logs/index', $data);
+		$this->template->content = View::forge('admin/logs/index', $data);
 
 	}
 
@@ -14,7 +14,7 @@ class Controller_Admin_Logs extends Controller_Admin{
 		$data['log'] = Model_Log::find($id);
 
 		$this->template->title = "Log";
-		$this->template->content = View::forge('admin\logs/view', $data);
+		$this->template->content = View::forge('admin/logs/view', $data);
 
 	}
 
@@ -51,7 +51,7 @@ class Controller_Admin_Logs extends Controller_Admin{
 		}
 
 		$this->template->title = "Logs";
-		$this->template->content = View::forge('admin\logs/create');
+		$this->template->content = View::forge('admin/logs/create');
 
 	}
 
@@ -94,7 +94,7 @@ class Controller_Admin_Logs extends Controller_Admin{
 		}
 
 		$this->template->title = "Logs";
-		$this->template->content = View::forge('admin\logs/edit');
+		$this->template->content = View::forge('admin/logs/edit');
 
 	}
 

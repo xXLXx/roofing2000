@@ -5,7 +5,7 @@ class Controller_Admin_Statuses extends Controller_Admin{
     {
         $data['statuses'] = Model_Status::find('all');
         $this->template->title = "Statuses";
-        $this->template->content = View::forge('admin\statuses/index', $data);
+        $this->template->content = View::forge('admin/statuses/index', $data);
 
     }
 
@@ -14,7 +14,7 @@ class Controller_Admin_Statuses extends Controller_Admin{
         $data['status'] = Model_Status::find($id);
 
         $this->template->title = "Status";
-        $this->template->content = View::forge('admin\statuses/view', $data);
+        $this->template->content = View::forge('admin/statuses/view', $data);
 
     }
 
@@ -50,7 +50,7 @@ class Controller_Admin_Statuses extends Controller_Admin{
         }
 
         $this->template->title = "Statuses";
-        $this->template->content = View::forge('admin\statuses/create');
+        $this->template->content = View::forge('admin/statuses/create');
 
     }
 
@@ -91,7 +91,7 @@ class Controller_Admin_Statuses extends Controller_Admin{
         }
 
         $this->template->title = "Statuses";
-        $this->template->content = View::forge('admin\statuses/edit');
+        $this->template->content = View::forge('admin/statuses/edit');
 
     }
 

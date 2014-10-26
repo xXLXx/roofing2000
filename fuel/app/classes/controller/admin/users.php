@@ -5,7 +5,7 @@ class Controller_Admin_Users extends Controller_Admin{
 	{
 		$data['users'] = Model_User::find('all', ['where' => [['group', '<', Auth::get('group')]]]);
 		$this->template->title = "Users";
-		$this->template->content = View::forge('admin\users/index', $data);
+		$this->template->content = View::forge('admin/users/index', $data);
 
 	}
 
@@ -14,7 +14,7 @@ class Controller_Admin_Users extends Controller_Admin{
 		$data['user'] = Model_User::find($id);
 
 		$this->template->title = "User";
-		$this->template->content = View::forge('admin\users/view', $data);
+		$this->template->content = View::forge('admin/users/view', $data);
 
 	}
 
@@ -57,7 +57,7 @@ class Controller_Admin_Users extends Controller_Admin{
 		}
 
 		$this->template->title = "Users";
-		$this->template->content = View::forge('admin\users/create');
+		$this->template->content = View::forge('admin/users/create');
 
 	}
 
@@ -112,7 +112,7 @@ class Controller_Admin_Users extends Controller_Admin{
 		}
 
 		$this->template->title = "Users";
-		$this->template->content = View::forge('admin\users/edit');
+		$this->template->content = View::forge('admin/users/edit');
 
 	}
 
