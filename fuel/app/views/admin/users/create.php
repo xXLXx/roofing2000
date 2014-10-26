@@ -1,7 +1,11 @@
-<h2>New User</h2>
-<br>
+<div class="text-center">
+	<h2>New User</h2>
+	<br>
 
-<?php echo render('admin\users/_form'); ?>
+	<?php echo render('admin\users/_form'); ?>
 
 
-<p><?php echo Html::anchor('admin/users', 'Back'); ?></p>
+	<div class="text-right">
+		<?php echo Html::anchor('admin/users', '<span class="glyphicon glyphicon-share-alt"></span>'); ?> 
+	</div>
+</div>

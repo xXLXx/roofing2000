@@ -13,6 +13,10 @@ body {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+h2 {
+    color: #555;
+}
+
 footer {
     /*padding-top: 25px;*/
     /*height: 65px;*/
@@ -187,7 +191,8 @@ footer {
 
 /******************LOGIN PAGE********************/
 .mono-form input[type="text"],
-.mono-form input[type="password"]{
+.mono-form input[type="password"],
+.mono-form select{
     font-size: 16px;
     background: #1b1b1b;
     height: 45px;
@@ -229,7 +234,8 @@ footer {
     font-weight: normal;
 }
 
-.mono-form input[type="submit"] {
+.mono-form input[type="submit"],
+.mono-button {
     box-shadow: inset 0 1px #ba3c30,
         inset 1px 0 #ba3c30,
         inset -1px 0 #ba3c30,
@@ -248,12 +254,16 @@ footer {
 }
 
 .mono-form input[type="submit"]:hover,
-.mono-form input[type="submit"]:focus {
+.mono-form input[type="submit"]:focus,
+.mono-button:hover,
+.mono-button:focus {
     opacity: .9;
 }
 
 .mono-form input[type="submit"]:active,
-.mono-form input[type="submit"]:disabled {
+.mono-form input[type="submit"]:disabled,
+.mono-button:active,
+.mono-button:disabled {
     margin-top: 28px;
     background: #e84c3d;
     box-shadow: inset 0 1px 2px #ba3c30;
@@ -292,4 +302,37 @@ body.modal-open {
 #modal-jobno .actions input[type="submit"] {
     color: #fff;
     margin-top: 0px;
+}
+
+.mono-table {
+    color: #555;
+}
+
+.mono-table tbody > tr > td {
+    border-color: #333;
+}
+
+.mono-table tbody > tr > td:first-child {
+    color: #bbb;
+}
+
+.mono-button {
+    box-shadow: inset 0 1px #398439,
+        inset 1px 0 #398439,
+        inset -1px 0 #398439,
+        inset 0 -1px #398439,
+        0 2px #398439,
+        0 3px #398439,
+        0 4px 2px rgba(0,0,0,0.0);
+    background: #47a447;
+}
+
+.mono-button:active,
+.mono-button:disabled {
+    background: #47a447;
+    box-shadow: inset 0 1px 2px #398439;
+}
+
+#student-view {
+    color: #bbb;
 }

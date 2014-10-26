@@ -3,7 +3,7 @@ class Controller_Admin_Users extends Controller_Admin{
 
 	public function action_index()
 	{
-		$data['users'] = Model_User::find('all');
+		$data['users'] = Model_User::find('all', ['where' => [['group', '<', Auth::get('group')]]]);
 		$this->template->title = "Users";
 		$this->template->content = View::forge('admin\users/index', $data);
 
