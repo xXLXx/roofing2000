@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title><?php echo $title; ?></title>
     <?php echo Asset::css([
+        'futura-pt.css',
         'bootstrap.min.css',
-        'styles.css'
+        'styles.css',
     ]); ?>
     <?php echo Asset::js(array(
         'jquery.min.js',
