@@ -7,10 +7,12 @@
     <?php echo Asset::css([
         'futura-pt.css',
         'bootstrap.min.css',
-        'styles.css',
+        'styles.css'
     ]); ?>
     <?php echo Asset::js(array(
         'jquery.min.js',
+        'fastclick.js',
+        'template.js'
     )); ?>
 </head>
 <body>
