@@ -160,9 +160,9 @@ class Controller_Admin_Logs extends Controller_Admin{
 		$xls = ExportXLS::forge($month_text . '.xls');
 		$xls->addHeader('Logs for ' . $month_text);
 		$xls->addHeader(null);
-		$xls->addHeader(['Name', 'Username', 'Time In', 'Time Out', 'Job No.', 'Location']);
+		$xls->addHeader(['Name', 'Username', 'Date', 'Time In', 'Time Out', 'Hours Worked', 'Job No.', 'Location']);
 
-		$date_format = '%B ' . (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? '%#d' : '%e') . ', %Y %I:%M%p';
+		$time_format = '%I:%M%p';
 
 		foreach ($logs as $item) {
 			// var_dump($item);
@@ -188,8 +188,10 @@ class Controller_Admin_Logs extends Controller_Admin{
 			$xls->addRow([
 				ucwords($userParent['first_name'] . ' ' . $userParent['last_name']),
 				$userParent['username'],
-				Date::forge($item['updated_at'])->format($date_format),
-				isset($item['timeout']) ? Date::forge($item['timeout'])->format($date_format) : Model_Log::LABEL_NOT_YET_TIMEOUT,
+				Date::forge($item['updated_at'])->format('%B ' . (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN' ? '%#d' : '%e') . ', %Y'),
+				Date::forge($item['updated_at'])->format($time_format),
+				isset($item['timeout']) ? Date::forge($item['timeout'])->format($time_format) : Model_Log::LABEL_NOT_YET_TIMEOUT,
+				isset($item['timeout']) ? round(($item['timeout'] - $item['updated_at']) / 3600, 3) : 'Cannot determine.',
 				$item['job_no'],
 				$item['location']
 			]);
