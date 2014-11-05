@@ -1,6 +1,9 @@
 <?php
 class Model_Status extends \Orm\Model
 {
+	const TIME_IN = '1';
+	const TIME_OUT = '4';
+
 	protected static $_properties = array(
 		'id',
 		'name',

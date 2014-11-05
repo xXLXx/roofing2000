@@ -1,26 +1,17 @@
-<h2>Listing Logs</h2>
-<br>
 <?php if ($logs): ?>
-<table class="table table-striped">
-	<thead>
+<table class="table mono-table" id="table-logs">
+	<!-- <thead>
 		<tr>
-			<th>User id</th>
-			<th>Status id</th>
-			<th>Location</th>
+			<th>Date</th>
 			<th></th>
 		</tr>
-	</thead>
+	</thead> -->
 	<tbody>
-<?php foreach ($logs as $item): ?>		<tr>
-
-			<td><?php echo $item->user_id; ?></td>
-			<td><?php echo $item->status_id; ?></td>
-			<td><?php echo $item->location; ?></td>
+<?php foreach ($logs as $item): ?>
+		<tr>
+			<td class="text-right"><?php echo Date::forge($item->updated_at)->format('%B %Y'); ?></td>
 			<td>
-				<?php echo Html::anchor('admin/logs/view/'.$item->id, 'View'); ?> |
-				<?php echo Html::anchor('admin/logs/edit/'.$item->id, 'Edit'); ?> |
-				<?php echo Html::anchor('admin/logs/delete/'.$item->id, 'Delete', array('onclick' => "return confirm('Are you sure?')")); ?>
-
+				<?php echo Html::anchor('admin/logs/view/'.$item->updated_at, '<span class="glyphicon glyphicon-eye-open"></span>'); ?>
 			</td>
 		</tr>
 <?php endforeach; ?>	</tbody>
@@ -29,7 +20,6 @@
 <?php else: ?>
 <p>No Logs.</p>
 
-<?php endif; ?><p>
-	<?php echo Html::anchor('admin/logs/create', 'Add new Log', array('class' => 'btn btn-success')); ?>
+<?php endif; ?>
 
-</p>
+<?php echo Html::anchor('admin/logs/get_xls', 'Download as Excel', ['class' => 'btn mono-button btn-lg btn-block btn-success', 'target' => '_blank']); ?> 

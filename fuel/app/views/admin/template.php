@@ -29,7 +29,16 @@
     <?php endif; ?>
     <div class="container">
         <div class="row header container">
-            <div class="col-xs-2 text-center"><?= Html::anchor('', '<span class="glyphicon glyphicon-home"></span>') ?></div>
+            <?php
+                $controller = Uri::segment(2);
+                $leftIcon = Html::anchor('', '<span class="glyphicon glyphicon-home"></span>');
+                if ($controller == 'users') {
+                    $leftIcon = Html::anchor('admin/logs', '<span class="glyphicon glyphicon-th-list"></span>');
+                } else if ($controller == 'logs') {
+                    $leftIcon = Html::anchor('admin/users', '<span class="glyphicon glyphicon-user"></span>');
+                }
+            ?>
+            <div class="col-xs-2 text-center"><?= $leftIcon ?></div>
             <div class="col-xs-8 text-center"><h1><?php echo $title; ?></h1></div>
             <?php if ($current_user) : ?>
             <div class="col-xs-2 text-center"><?= Html::anchor('admin/logout', '<span class="glyphicon glyphicon-off"></span>') ?></div>

@@ -306,6 +306,8 @@ body.modal-open {
 
 .mono-table {
     color: #555;
+    table-layout: fixed;
+    word-wrap: break-word;
 }
 
 .mono-table tbody > tr > td {

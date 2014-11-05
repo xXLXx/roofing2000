@@ -1,5 +1,5 @@
 <?php if ($users): ?>
-<table class="table mono-table">
+<table class="table mono-table" id="table-users">
 	<tbody>
 <?php foreach ($users as $item): ?>		<tr>
 

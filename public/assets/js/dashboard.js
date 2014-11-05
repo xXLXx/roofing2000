@@ -144,7 +144,8 @@ function get12HourTime(date)
                 status_id: this.options.currentStatus,
                 lat: lat ? lat : -86,
                 lng: lng ? lng : -181,
-                job_no: this.options.jobNo
+                job_no: this.options.jobNo,
+                location: location ? location : 'Location not detected.'
             }, function (data) {
             context.sendToGForms(location, data);
         })
@@ -155,35 +156,38 @@ function get12HourTime(date)
     }
 
     StatusButton.prototype.sendToGForms = function(location, timeInSec) {
-        var location = location ? location : 'Location not detected.';
-        var time = Date(timeInSec * 1000);
+        // var location = location ? location : 'Location not detected.';
+        // var time = Date(timeInSec * 1000);
 
         var context = this;
 
-        $.ajax({
-            url: 'https://docs.google.com/forms/d/1W0NHmWf869Ixbpa3GrfrrutNGpmKecQ15VTAv1-VVVo/formResponse',
-            data: {
-                "entry.1088211692": USER_NAME,
-                "entry.1004697691": USERNAME,
-                "entry.1452432693": context.options.jobNo,
-                "entry.60465779": context.options.statuses[context.options.currentStatus].name,
-                "entry.1912068217": time,
-                "entry.310840202": location
-            },
-            type: "POST",
-            dataType: "xml",
-            done: function (data) {
-                console.log(data);
-                context.enable();
-                context.nextStatus();
-            },
-            error: function (error) {
-                context.enable();
-                context.nextStatus();
-                // context.previousStatus();
-                console.log(error);
-            }
-        });
+        // $.ajax({
+        //     url: 'https://docs.google.com/forms/d/1W0NHmWf869Ixbpa3GrfrrutNGpmKecQ15VTAv1-VVVo/formResponse',
+        //     data: {
+        //         "entry.1088211692": USER_NAME,
+        //         "entry.1004697691": USERNAME,
+        //         "entry.1452432693": context.options.jobNo,
+        //         "entry.60465779": context.options.statuses[context.options.currentStatus].name,
+        //         "entry.1912068217": time,
+        //         "entry.310840202": location
+        //     },
+        //     type: "POST",
+        //     dataType: "xml",
+        //     done: function (data) {
+        //         console.log(data);
+        //         context.enable();
+        //         context.nextStatus();
+        //     },
+        //     error: function (error) {
+        //         context.enable();
+        //         context.nextStatus();
+        //         // context.previousStatus();
+        //         console.log(error);
+        //     }
+        // });
+        
+        context.enable();
+        context.nextStatus();
 
         if (!$(context.options.jobNoModalSelector + ' input[type="text"]').val()) {
             $(context.options.jobNoTextSelector).html((context.options.jobNo = null));
