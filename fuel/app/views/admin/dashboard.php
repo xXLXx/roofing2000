@@ -39,6 +39,5 @@
 
 <?php echo Asset::js(array(
     'geoPosition.js',
-    'dashboard.js',
     'bootstrap.min.js'
 )); ?>

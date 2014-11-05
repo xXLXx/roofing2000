@@ -43,6 +43,5 @@
 
 
 <?php echo Asset::js(array(
-    'dashboard.js',
     'bootstrap.min.js'
 )); ?>

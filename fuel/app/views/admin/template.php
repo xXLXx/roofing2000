@@ -9,11 +9,6 @@
         'bootstrap.min.css',
         'styles.css'
     ]); ?>
-    <?php echo Asset::js(array(
-        'jquery.min.js',
-        'fastclick.js',
-        'template.js'
-    )); ?>
 </head>
 <body>
     <?php if ($current_user): ?>
@@ -53,6 +48,12 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+<?php echo Asset::js(array(
+    'jquery.min.js',
+    'fastclick.js',
+    'template.js',
+    'dashboard.js',
+)); ?>
 <?php echo $content; ?>
             </div>
         </div>
