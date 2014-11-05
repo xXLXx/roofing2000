@@ -88,24 +88,7 @@ return array(
 	 * Roles as name => array(location => rights)
 	 */
 	'roles' => array(
-		/**
-		 * Examples
-		 * ---
-		 *
-		 * Regular example with role "user" given create & read rights on "comments":
-		 *   'user'  => array('comments' => array('create', 'read')),
-		 * And similar additional rights for moderators:
-		 *   'moderator'  => array('comments' => array('update', 'delete')),
-		 *
-		 * Wildcard # role (auto assigned to all groups):
-		 *   '#'  => array('website' => array('read'))
-		 *
-		 * Global disallow by assigning false to a role:
-		 *   'banned' => false,
-		 *
-		 * Global allow by assigning true to a role (use with care!):
-		 *   'super' => true,
-		 */
+		'admin'  => array('logs' => array('read'), 'users' => array('read')),
 	),
 
 	/**
