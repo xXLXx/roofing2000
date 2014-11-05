@@ -27,18 +27,20 @@ class Model_User extends \Orm\Model
 		),
 	);
 
-	public static function validate($factory)
+	public static function validate($factory, $data = null)
 	{
 		$val = Validation::forge($factory);
-		$val->add_field('username', 'Username', 'required|max_length[50]');
-		$val->add_field('password', 'Password', 'required|max_length[50]');
+		$val->add_callable('Validation_Rules');
+		$val->set_message('required', ':label requires a value.');
+		$val->set_message('match_field', ':label should match :param:1.');
+
+		$val->add_field('username', 'Username', 'required|max_length[50]|unique[users.username' . ($factory == 'edit' ? (',' . $data['username']) : '') . ']');
+		$val->add_field('password', 'Password', 'required|max_length[255]');
+		$val->add_field('password_retype', 'Password Retype', 'match_field[password]|required_with[password]');
 		$val->add_field('first_name', 'First Name', 'required|max_length[50]');
 		$val->add_field('last_name', 'Last Name', 'required|max_length[50]');
-		$val->add_field('email', 'Email', 'required|valid_email|max_length[255]');
+		$val->add_field('email', 'Email', 'required|valid_email|max_length[255]|unique[users.email' . ($factory == 'edit' ? (',' . $data['email']) : '') . ']');
 		$val->add_field('group', 'Group', 'required|valid_string[numeric]');
-		$val->add_field('profile_fields', 'Profile Fields', 'required');
-		$val->add_field('last_login', 'Last Login', 'required|valid_string[numeric]');
-		$val->add_field('login_hash', 'Login Hash', 'required|max_length[255]');
 
 		return $val;
 	}

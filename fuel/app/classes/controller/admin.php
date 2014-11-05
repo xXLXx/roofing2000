@@ -56,7 +56,7 @@ class Controller_Admin extends Controller_Base
                     {
                         $current_user = Model_User::find_by_username(Auth::get_screen_name());
                     }
-                    Session::set_flash('success', e('Welcome, '.$current_user->username));
+                    // Session::set_flash('success', e('Welcome, '.$current_user->username));
                     Response::redirect('admin');
                 }
                 else

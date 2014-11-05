@@ -7,6 +7,14 @@
 
 			</div>
 			<div class="form-group">
+				<?php echo Form::password('password', Input::post('password', isset($user) ? $user->username : ''), array('class' => 'col-md-4 form-control', 'placeholder'=>'Password')); ?>
+
+			</div>
+			<div class="form-group">
+				<?php echo Form::password('password_retype', Input::post('password_retype', isset($user) ? $user->username : ''), array('class' => 'col-md-4 form-control', 'placeholder'=>'Password Retype')); ?>
+
+			</div>
+			<div class="form-group">
 				<?php echo Form::input('first_name', Input::post('first_name', isset($user) ? $user->first_name : ''), array('class' => 'col-md-4 form-control', 'placeholder'=>'First name')); ?>
 
 			</div>

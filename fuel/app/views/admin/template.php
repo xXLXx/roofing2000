@@ -47,6 +47,22 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-xs-12">
+            <?php if (Session::get_flash('success')): ?>
+                <div class="alert alert-success">
+                    <button class="close" data-dismiss="alert">×</button>
+                    <p><?php echo implode('</p><p>', (array) Session::get_flash('success')); ?></p>
+                </div>
+            <?php endif; ?>
+            <?php if (Session::get_flash('error')): ?>
+                <div class="alert alert-danger">
+                    <button class="close" data-dismiss="alert">×</button>
+                    <p><?php echo implode('</p><p>', (array) Session::get_flash('error')); ?></p>
+                </div>
+            <?php endif; ?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
 <?php echo Asset::js(array(
     'jquery.min.js',

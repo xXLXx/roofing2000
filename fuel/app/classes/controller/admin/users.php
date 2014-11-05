@@ -38,14 +38,14 @@ class Controller_Admin_Users extends Controller_Admin{
 			{
 				$user = Model_User::forge(array(
 					'username' => Input::post('username'),
-					'password' => Input::post('password'),
+					'password' => Auth::hash_password(Input::post('password')),
 					'first_name' => Input::post('first_name'),
 					'last_name' => Input::post('last_name'),
 					'email' => Input::post('email'),
 					'group' => Input::post('group'),
-					'profile_fields' => Input::post('profile_fields'),
-					'last_login' => Input::post('last_login'),
-					'login_hash' => Input::post('login_hash'),
+					// 'profile_fields' => Input::post('profile_fields'),
+					// 'last_login' => Input::post('last_login'),
+					// 'login_hash' => Input::post('login_hash'),
 				));
 
 				if ($user and $user->save())
@@ -74,19 +74,21 @@ class Controller_Admin_Users extends Controller_Admin{
 	public function action_edit($id = null)
 	{
 		$user = Model_User::find($id);
-		$val = Model_User::validate('edit');
+		$username = $user->username;
+		$email = $user->email;
+		$val = Model_User::validate('edit', compact('username', 'email'));
 
 		if ($val->run())
 		{
 			$user->username = Input::post('username');
-			$user->password = Input::post('password');
+			$user->password = Auth::hash_password(Input::post('password'));
 			$user->first_name = Input::post('first_name');
 			$user->last_name = Input::post('last_name');
 			$user->email = Input::post('email');
 			$user->group = Input::post('group');
-			$user->profile_fields = Input::post('profile_fields');
-			$user->last_login = Input::post('last_login');
-			$user->login_hash = Input::post('login_hash');
+			// $user->profile_fields = Input::post('profile_fields');
+			// $user->last_login = Input::post('last_login');
+			// $user->login_hash = Input::post('login_hash');
 
 			if ($user->save())
 			{
