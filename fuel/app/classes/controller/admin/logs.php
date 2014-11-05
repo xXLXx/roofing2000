@@ -1,6 +1,15 @@
 <?php
 class Controller_Admin_Logs extends Controller_Admin{
 
+	public function before()
+	{
+		if (!Auth::has_access('logs.read')) {
+			Response::redirect('admin');
+		}
+
+		parent::before();
+	}
+
 	public function action_index()
 	{
 		$data['logs'] = Model_Log::find('all', [

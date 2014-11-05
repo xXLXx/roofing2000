@@ -1,6 +1,16 @@
 <?php
 class Controller_Admin_Users extends Controller_Admin{
 
+
+	public function before()
+	{
+		if (!Auth::has_access('users.read')) {
+			Response::redirect('admin');
+		}
+
+		parent::before();
+	}
+
 	public function action_index()
 	{
 		$data['users'] = Model_User::find('all', ['where' => [['group', '<', Auth::get('group')]]]);
