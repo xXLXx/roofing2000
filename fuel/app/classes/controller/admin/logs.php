@@ -1,9 +1,10 @@
 <?php
 class Controller_Admin_Logs extends Controller_Admin{
+	private $accessibleActions = ['madd_log'];
 
 	public function before()
 	{
-		if (!Auth::has_access('logs.read')) {
+		if (!Auth::has_access('logs.read') && !in_array(Request::active()->action, $this->accessibleActions)) {
 			Response::redirect('admin');
 		}
 
