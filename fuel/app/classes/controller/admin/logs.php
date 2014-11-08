@@ -17,7 +17,7 @@ class Controller_Admin_Logs extends Controller_Admin{
             'group_by'  => [DB::expr('FROM_UNIXTIME(updated_at, "%M")')],
             'order_by'  => ['updated_at' => 'DESC']
         ]);
-        $this->template->title = "Logs";
+        $this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
         $this->template->content = View::forge('admin/logs/index', $data);
 
     }
@@ -35,7 +35,7 @@ class Controller_Admin_Logs extends Controller_Admin{
 
         // var_dump($data['logs']); exit();
 
-        $this->template->title = "Log";
+        $this->template->title = ucwords(Auth::get('first_name') . ' ' . Auth::get('last_name'));
         $this->template->content = View::forge('admin/logs/view', $data);
 
     }
